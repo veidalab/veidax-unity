@@ -1,0 +1,36 @@
+#UNITY GENERATED
+Temp
+Temp/
+Temp/*
+Obj/
+Obj/*
+UnityGenerated/
+UnityGenerated/*
+Library/
+Library/*
+Assets/AssetStoreTools*
+
+#VISUAL STUDIO/MONO DEVELOP
+ExportedObj/
+*.svd
+*.userprefs
+*.csproj
+*.pidb
+*.suo
+*.sln
+*.user
+*.unityproj
+*.booproj
+
+#TANGO/ANDROID
+*.apk
+
+#OS RELATED
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
