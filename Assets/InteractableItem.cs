@@ -3,30 +3,30 @@ using System.Collections;
 
 public class InteractableItem : MonoBehaviour {
 
-	public Rigidbody rigidbody;
+	protected Rigidbody rigidbody;
 
-	private bool currentlyInteracting;
+	protected bool currentlyInteracting;
 
 	private WandController attachedWand;
 
 	private Transform interactionPoint;
 
 	private float velocityFactor = 20000f;
-	private float rotationFactor = 400f;
+	private float rotationFactor = 600f;
 	private Vector3 posDelta;
 	private Quaternion rotationDelta;
 	private float angle;
 	private Vector3 axis;
 
 	// Use this for initialization
-	void Start () {
+	protected void Start () {
 		rigidbody = GetComponent<Rigidbody>();
 		interactionPoint = new GameObject().transform;
 		velocityFactor /= rigidbody.mass;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected void Update () {
 		if (attachedWand && currentlyInteracting) {
 			posDelta = attachedWand.transform.position - interactionPoint.position;
 			this.rigidbody.velocity = posDelta * velocityFactor * Time.fixedDeltaTime;
