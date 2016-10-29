@@ -24,4 +24,11 @@ public class CastleBehavior : MonoBehaviour {
 	public int GetHitPoints() {
 		return hitPoints;
 	}
+
+	public void OnDestroy() {
+		GameObject[] enemyRelatedObjs = GameObject.FindGameObjectsWithTag("EnemyRelated");
+		foreach (GameObject obj in enemyRelatedObjs) {
+			Destroy(obj);
+		}
+	}
 }

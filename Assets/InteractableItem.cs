@@ -13,7 +13,7 @@ public class InteractableItem : MonoBehaviour {
 
 	private float velocityFactor = 20000f;
 	private float rotationFactor = 600f;
-	private Vector3 posDelta;
+	private Vector3 posDelta;  // posDelta = (hand_pos - obj_pos)
 	private Quaternion rotationDelta;
 	private float angle;
 	private Vector3 axis;
@@ -60,5 +60,11 @@ public class InteractableItem : MonoBehaviour {
 
 	public bool IsInteracting(){
 		return currentlyInteracting;
+	}
+
+	private void OnDestroy() {
+		if(interactionPoint) {
+			Destroy(interactionPoint.gameObject);
+		}
 	}
 }

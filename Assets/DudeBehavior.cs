@@ -5,7 +5,7 @@ public class DudeBehavior : InteractableItem, EnemyBehaviorInterface {
 	private CastleBehavior castle;
 	private Vector3 castlePos;
 
-	private float speed = 0.1f;
+	private float speed = 0.2f;
 	private float sqrAttackRange = 0.2f;
 
 	private int attackPoints = 1;
@@ -24,7 +24,7 @@ public class DudeBehavior : InteractableItem, EnemyBehaviorInterface {
 	
 	// Update is called once per frame
 	void Update () {
-		if (transform.position.z < -20 ) {
+		if (transform.position.y < -20 ) {
 			Destroy(gameObject);
 		}
 		base.Update();
@@ -44,7 +44,7 @@ public class DudeBehavior : InteractableItem, EnemyBehaviorInterface {
 				GetComponent<Renderer>().material.color = Color.red;
 				castle.ProcessDamage(attackPoints);
 			} else {
-				GetComponent<Renderer>().material.color = Color.white;
+				GetComponent<Renderer>().material.color = Color.blue;
 			}
 			yield return new WaitForSeconds(attackCooldown);
 		}
