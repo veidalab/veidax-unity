@@ -9,6 +9,8 @@ UnityGenerated/*
 Library/
 Library/*
 Assets/AssetStoreTools*
+*_Data/
+*_Data/*
 
 #VISUAL STUDIO/MONO DEVELOP
 ExportedObj/
@@ -22,8 +24,9 @@ ExportedObj/
 *.unityproj
 *.booproj
 
-#TANGO/ANDROID
+#BUILD FILES
 *.apk
+*.exe
 
 #OS RELATED
 .DS_Store
