@@ -21,13 +21,13 @@ public class ScreenClicker : MonoBehaviour {
 
 		RaycastHit hit = new RaycastHit ();
 
-		Debug.Log(Physics.Raycast (ray, out hit));
+		//Debug.Log(Physics.Raycast (ray, out hit));
 
 		if (Physics.Raycast (ray, out hit)) {
 			Debug.Log(hit.collider.gameObject.name);
-			Debug.Log("Test");
-			//var clickMove = hit.collider.gameObject.GetComponent<ClickMove>();
-			//clickMove.OnClick(hit.point);
+			//Debug.Log("Test");
+			ClickMove clickMove = hit.collider.gameObject.GetComponent<ClickMove>();
+			clickMove.OnClick(hit.point);
 		}
 	}
 }

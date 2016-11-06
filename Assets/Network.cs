@@ -33,8 +33,8 @@ public class Network : MonoBehaviour {
 	Vector3 SetPlayerSpawnPoint() {
 		//Vector2 randomPoint = Random.insideUnitCircle * 1.5f;
 
-		float x = 4.0f;
-		float y = 0.1f; //TODO: flying units;
+		float x = 3.0f;
+		float y = 1.081f; //TODO: flying units;
 		float z = -1.0f;
 
 		return new Vector3(x, y, z);
