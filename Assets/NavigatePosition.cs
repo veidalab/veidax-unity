@@ -19,11 +19,11 @@ public class NavigatePosition : MonoBehaviour {
 		foreach (GameObject playerLoaded in players) {
 			agent = playerLoaded.GetComponent<NavMeshAgent> ();
 			agent.enabled = true;
-		}
-		if(agent.isOnNavMesh){
-			agent.SetDestination (position);
-		} else {
-			Debug.Log("Not on NavMesh");
+			if(agent.isOnNavMesh){
+				agent.SetDestination (position);
+			} else {
+				Debug.Log("Not on NavMesh");
+			}
 		}
 	}
 }

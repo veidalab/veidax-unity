@@ -25,7 +25,7 @@ public class DudeBehavior : InteractableItem, EnemyBehaviorInterface {
 	// Update is called once per frame
 	void Update () {
 		if (transform.position.y < -20 ) {
-			Destroy(gameObject);
+			//Destroy(gameObject);
 		}
 		base.Update();
 		Move();
@@ -35,24 +35,27 @@ public class DudeBehavior : InteractableItem, EnemyBehaviorInterface {
 		if (!currentlyInteracting) {
 			float step = speed * Time.deltaTime;
 			transform.position = Vector3.MoveTowards(transform.position, castlePos, step);
+			transform.LookAt(castlePos);
+			GetComponent<Animator>().SetFloat("Distance", (castlePos-transform.position).sqrMagnitude);
+			//Debug.Log(GetComponent<Animator>().GetFloat("Distance"));
 		}
 	}
 
 	public IEnumerator Attack() {
 		while (true) {
 			if ((transform.position - castlePos).sqrMagnitude < sqrAttackRange) {
-				GetComponent<Renderer>().material.color = Color.red;
+				//GetComponent<Renderer>().material.color = Color.red;
 				castle.ProcessDamage(attackPoints);
-			} else {
-				GetComponent<Renderer>().material.color = Color.blue;
-			}
+			} //else {
+				//GetComponent<Renderer>().material.color = Color.blue;
+			//}
 			yield return new WaitForSeconds(attackCooldown);
 		}
 	}
 
 	public void OnCollisionEnter(Collision collision) {
 		if (rigidbody.velocity.magnitude > killThreshold) {
-			Destroy(gameObject);
+			//Destroy(gameObject);
 		}
 	}
 }
