@@ -1,3 +1,3 @@
-SteamVR Social
+*SteamVR Social*
 
-Simple Unity Application to interact with objects will communicating with friends via speech
+Simple Unity Application to interact with objects in Virtual Reality while socializing with friends
