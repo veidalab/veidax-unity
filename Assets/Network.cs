@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using SocketIO;
 
 
@@ -8,7 +8,10 @@ public class Network : MonoBehaviour {
 	public SocketIOComponent socket;
 
 	public GameObject playerPrefab;
+
 	private NetworkMove netMove;
+
+	Dictionary<string, Object> players;
 
 	// Use this for initialization
 	void Start () {
@@ -21,6 +24,8 @@ public class Network : MonoBehaviour {
 		netMove = playerPrefab.GetComponent<NetworkMove>();
 		netMove.socket = socket;
 
+		players = new Dictionary<string, Object> ();
+
 	}
 
 	// Callback used when connected
@@ -29,21 +34,34 @@ public class Network : MonoBehaviour {
 	}
 
 	void OnSpawned(SocketIOEvent e) { 
-		Debug.Log("another client connected");
-		Instantiate (playerPrefab, SetPlayerSpawnPoint(),Quaternion.identity);
+		Debug.Log("spawned" + e.ToString());
+		var player = Instantiate (playerPrefab, SetPlayerSpawnPoint(),Quaternion.identity);
+
+		players.Add (e.data["id"].ToString (), player);
+		Debug.Log("count: " + players.Count);
 	}
 
 	void OnMove(SocketIOEvent e) {
 		Debug.Log("player is moving" + e.data);
+
+		var player = (GameObject) players [e.data ["id"].ToString()];
+		var position = new Vector3(GetFloatFromJson(e.data,"x"), 0, GetFloatFromJson(e.data,"y"));
+		var navPos = player.GetComponent<NavigatePosition> ();
+
+		navPos.NavigateTo(position);
 	}
 
 	Vector3 SetPlayerSpawnPoint() {
-		//Vector2 randomPoint = Random.insideUnitCircle * 1.5f;
+		Vector2 randomPoint = Random.insideUnitCircle * 3.5f;
 
-		float x = 3.0f;
+		float x = randomPoint.x;
 		float y = 1.081f; //TODO: flying units;
-		float z = -1.0f;
+		float z = randomPoint.y;
 
 		return new Vector3(x, y, z);
+	}
+
+	float GetFloatFromJson(JSONObject data, string key) {
+		return float.Parse(data [key].ToString().Replace("\"",""));
 	}
 }

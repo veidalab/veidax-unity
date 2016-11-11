@@ -11,7 +11,6 @@ public class ScreenClicker : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(Input.GetButtonDown ("Fire1")){
-
 			Clicked ();
 		}
 	}
@@ -25,7 +24,6 @@ public class ScreenClicker : MonoBehaviour {
 
 		if (Physics.Raycast (ray, out hit)) {
 			Debug.Log(hit.collider.gameObject.name);
-			//Debug.Log("Test");
 			ClickMove clickMove = hit.collider.gameObject.GetComponent<ClickMove>();
 			clickMove.OnClick(hit.point);
 		}
