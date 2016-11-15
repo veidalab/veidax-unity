@@ -16,13 +16,18 @@ public class NavigatePosition : MonoBehaviour {
 
 	public void NavigateTo (Vector3 position) {
 		players = GameObject.FindGameObjectsWithTag("Player");
+
 		foreach (GameObject playerLoaded in players) {
-			agent = playerLoaded.GetComponent<NavMeshAgent> ();
-			agent.enabled = true;
-			if(agent.isOnNavMesh){
-				agent.SetDestination (position);
-			} else {
-				Debug.Log("Not on NavMesh");
+			Debug.Log("playerId2: " + GameObject.FindGameObjectsWithTag("Ground")[0].GetComponent<UniqueId>().uniqueId);
+			Debug.Log("prefabId: " + playerLoaded.GetComponent<UniqueId>().uniqueId);
+			if(playerLoaded.GetComponent<UniqueId>().uniqueId == GameObject.FindGameObjectsWithTag("Ground")[0].GetComponent<UniqueId>().uniqueId){
+				agent = playerLoaded.GetComponent<NavMeshAgent> ();
+				agent.enabled = true;
+				if(agent.isOnNavMesh){
+					agent.SetDestination (position);
+				} else {
+					Debug.Log("Not on NavMesh");
+				}
 			}
 		}
 	}
