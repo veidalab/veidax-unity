@@ -55,7 +55,7 @@ public class Network : MonoBehaviour {
 		var position = new Vector3(GetFloatFromJson(e.data,"x"), 0, GetFloatFromJson(e.data,"y"));
 		var navPos = player.GetComponent<NavigatePosition> ();
 
-		navPos.NavigateTo(position);
+		navPos.NavigateToRemote(position, e.data ["id"].ToString());
 	}
 
 	Vector3 SetPlayerSpawnPoint() {

@@ -14,13 +14,33 @@ public class NavigatePosition : MonoBehaviour {
 	}
 	
 
-	public void NavigateTo (Vector3 position) {
+	public void NavigateToLocal (Vector3 position) {
 		players = GameObject.FindGameObjectsWithTag("Player");
 
 		foreach (GameObject playerLoaded in players) {
-			Debug.Log("playerId2: " + GameObject.FindGameObjectsWithTag("Ground")[0].GetComponent<UniqueId>().uniqueId);
+			Debug.Log("local playerId: " + GameObject.FindGameObjectsWithTag("Ground")[0].GetComponent<UniqueId>().uniqueId);
 			Debug.Log("prefabId: " + playerLoaded.GetComponent<UniqueId>().uniqueId);
-			if(playerLoaded.GetComponent<UniqueId>().uniqueId == GameObject.FindGameObjectsWithTag("Ground")[0].GetComponent<UniqueId>().uniqueId){
+			if(object.Equals(playerLoaded.GetComponent<UniqueId>().uniqueId, GameObject.FindGameObjectsWithTag("Ground")[0].GetComponent<UniqueId>().uniqueId)){
+				Debug.Log("moving local playerId: " + GameObject.FindGameObjectsWithTag("Ground")[0].GetComponent<UniqueId>().uniqueId);
+				agent = playerLoaded.GetComponent<NavMeshAgent> ();
+				agent.enabled = true;
+				if(agent.isOnNavMesh){
+					agent.SetDestination (position);
+				} else {
+					Debug.Log("Not on NavMesh");
+				}
+			}
+		}
+	}
+
+	public void NavigateToRemote (Vector3 position, string uniqueId) {
+		players = GameObject.FindGameObjectsWithTag("Player");
+
+		foreach (GameObject playerLoaded in players) {
+			Debug.Log("remote playerId: " + uniqueId);
+			Debug.Log("prefabId: " + playerLoaded.GetComponent<UniqueId>().uniqueId);
+			if(object.Equals(playerLoaded.GetComponent<UniqueId>().uniqueId, uniqueId)){
+				Debug.Log("moving remote playerId: " + playerLoaded.GetComponent<UniqueId>().uniqueId);
 				agent = playerLoaded.GetComponent<NavMeshAgent> ();
 				agent.enabled = true;
 				if(agent.isOnNavMesh){
