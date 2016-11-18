@@ -9,6 +9,8 @@ public class Network : MonoBehaviour {
 
 	public GameObject playerPrefab;
 
+	public GameObject myPlayer;
+
 	private NetworkMove netMove;
 
 	Dictionary<string, GameObject> players;
@@ -19,6 +21,9 @@ public class Network : MonoBehaviour {
 		socket.On("open", OnConnected);
 		socket.On("spawn", OnSpawned);
 		socket.On("move", OnMove);
+		socket.On("disconnected", OnDisconnected);
+		socket.On("requestPosition", OnRequestPosition);
+		socket.On("updatePosition", OnUpdatePosition);
 
 		playerPrefab = (GameObject) Resources.Load("Player");
 		netMove = playerPrefab.GetComponent<NetworkMove>();
@@ -30,11 +35,11 @@ public class Network : MonoBehaviour {
 
 	// Callback used when connected
 	void OnConnected(SocketIOEvent e) {
-		Debug.Log("connected");
+		Debug.Log("connected to server");
 	}
 
 	void OnSpawned(SocketIOEvent e) { 
-		Debug.Log("spawned" + e.ToString());
+		Debug.Log("spawning new player: " + e.ToString());
 		var player = (GameObject) Instantiate (playerPrefab, SetPlayerSpawnPoint(),Quaternion.identity);
 
 		players.Add (e.data["id"].ToString (), player);
@@ -45,7 +50,7 @@ public class Network : MonoBehaviour {
 			GameObject[] ground = GameObject.FindGameObjectsWithTag("Ground");
 			ground[0].GetComponent<UniqueId>().uniqueId = e.data["id"].ToString ();
 		}
-		Debug.Log("count: " + players.Count);
+		Debug.Log("total players connected: " + players.Count);
 	}
 
 	void OnMove(SocketIOEvent e) {
@@ -58,6 +63,30 @@ public class Network : MonoBehaviour {
 		navPos.NavigateToRemote(position, e.data ["id"].ToString());
 	}
 
+	void OnDisconnected(SocketIOEvent e) {
+		Debug.Log("Client disconnected from backend" + e.data);
+
+		var player = players[e.data["id"].ToString()];
+		Destroy (player);
+		players.Remove(e.data["id"].ToString());
+	}
+
+	void OnRequestPosition(SocketIOEvent e) {
+		Debug.Log("server is requesting position" + e.data);
+		socket.Emit("updatePosition", new JSONObject(VectorToJSON(myPlayer.transform.position)));
+	}
+
+	void OnUpdatePosition(SocketIOEvent e) {
+		Debug.Log("server is requesting position" + e.data);
+		var player = players [e.data ["id"].ToString()];
+		var position = new Vector3(GetFloatFromJson(e.data,"x"), 0, GetFloatFromJson(e.data,"y"));	
+		player.transform.position = position;
+	}
+
+	float GetFloatFromJson(JSONObject data, string key) {
+		return float.Parse(data [key].ToString().Replace("\"",""));
+	}
+
 	Vector3 SetPlayerSpawnPoint() {
 		Vector2 randomPoint = Random.insideUnitCircle * 3.5f;
 
@@ -68,7 +97,7 @@ public class Network : MonoBehaviour {
 		return new Vector3(x, y, z);
 	}
 
-	float GetFloatFromJson(JSONObject data, string key) {
-		return float.Parse(data [key].ToString().Replace("\"",""));
+	public static string VectorToJSON (Vector3 vector) {
+		return string.Format (@"{{""x"":""{0}"", ""y"":""{1}""}}", vector.x, vector.z);
 	}
 }
