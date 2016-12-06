@@ -14,9 +14,10 @@ public class WandController : MonoBehaviour {
 
 	private InteractableItem closestItem;
 	private InteractableItem interactingItem;
+    public CameraController cam;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		trackedObj = GetComponent<SteamVR_TrackedObject>();
 	}
 	
@@ -27,7 +28,50 @@ public class WandController : MonoBehaviour {
 			return;
 		}
 
-		if(controller.GetPressDown(gripButton)) {
+        if (controller.GetTouch(touchPad))
+        {
+            Vector2 dir = controller.GetAxis();
+            float rotation = -head.GetComponent<Transform>().rotation.eulerAngles.y;
+            float sin = Mathf.Sin(rotation * Mathf.Deg2Rad);
+            float cos = Mathf.Cos(rotation * Mathf.Deg2Rad);
+            float tx = dir.x;
+            float ty = dir.y;
+
+            dir.x = (cos * tx) - (sin * ty);
+            dir.y = (sin * tx) + (cos * ty);
+
+            if (dir.x < -0.2)
+            {
+                if (dir.y < -0.2)
+                    cam.Move("Backward and Left");
+                else if (dir.y > 0.2)
+                    cam.Move("Forward and Left");
+                else
+                    cam.Move("Left");
+
+            }
+            else if (dir.x > 0.2)
+            {
+                if (dir.y < -0.2)
+                    cam.Move("Backward and Right");
+                else if (dir.y > 0.2)
+                    cam.Move("Forward and Right");
+                else
+                    cam.Move("Right");
+
+            }
+            else
+            {
+                if (dir.y < -0.2)
+                    cam.Move("Backward");
+                else if (dir.y > 0.2)
+                    cam.Move("Forward");
+
+            }
+
+        }
+
+        if (controller.GetPressDown(gripButton)) {
 			float minDistance = float.MaxValue;
 
 			float distance;
