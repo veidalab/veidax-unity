@@ -3,13 +3,13 @@ using System.Collections;
 
 public class NavigatePosition : MonoBehaviour {
 
-	public NavMeshAgent agent;
+	public UnityEngine.AI.NavMeshAgent agent;
 	public GameObject playerLoaded;
 	public GameObject[] players;
 
 	// Use this for initialization
 	void Start () {
-		agent = GetComponent<NavMeshAgent> ();
+		agent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
 		agent.enabled = false;
 	}
 	
@@ -22,7 +22,7 @@ public class NavigatePosition : MonoBehaviour {
 			Debug.Log("prefabId: " + playerLoaded.GetComponent<UniqueId>().uniqueId);
 			if(object.Equals(playerLoaded.GetComponent<UniqueId>().uniqueId, GameObject.FindGameObjectsWithTag("Ground")[0].GetComponent<UniqueId>().uniqueId)){
 				Debug.Log("moving local playerId: " + GameObject.FindGameObjectsWithTag("Ground")[0].GetComponent<UniqueId>().uniqueId);
-				agent = playerLoaded.GetComponent<NavMeshAgent> ();
+				agent = playerLoaded.GetComponent<UnityEngine.AI.NavMeshAgent> ();
 				agent.enabled = true;
 				if(agent.isOnNavMesh){
 					agent.SetDestination (position);
@@ -41,7 +41,7 @@ public class NavigatePosition : MonoBehaviour {
 			Debug.Log("prefabId: " + playerLoaded.GetComponent<UniqueId>().uniqueId);
 			if(object.Equals(playerLoaded.GetComponent<UniqueId>().uniqueId, uniqueId)){
 				Debug.Log("moving remote playerId: " + playerLoaded.GetComponent<UniqueId>().uniqueId);
-				agent = playerLoaded.GetComponent<NavMeshAgent> ();
+				agent = playerLoaded.GetComponent<UnityEngine.AI.NavMeshAgent> ();
 				agent.enabled = true;
 				if(agent.isOnNavMesh){
 					agent.SetDestination (position);
