@@ -1,4 +1,4 @@
-﻿Shader "Volume Rendering/Death Star"
+﻿Shader "Custom/Death Star"
 {
 	SubShader
 	{
