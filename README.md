@@ -3,8 +3,22 @@ SteamVR Social
 
 Simple Unity Application to interact with objects in Virtual Reality while socializing with friends
 
+Features Included:
 
-Layer Uses (for collision, culling, raycasting, what is in each layer)
+1. Front-facing camera with HTC Vive
+2. Rotating Deathstar volumetric shader
+3. SocketIO network connection for game state
+4. Marching gameobjects attempting to destroy 'castle'
+5. Multiple players
+6. Leap motion hands
+
+### Setup Tips
+To enable the front facing camera with SteamVR/HTC Vive make sure the settings are set to:
+![alt text](https://raw.githubusercontent.com/veidalab/veidax-unity/master/Images/ViveFrontCameraSettings.PNG "SteamVR Camera Settings")
+
+
+Layer Uses (for collision, culling, raycasting, what is in each layer):
+
 1. Tag Uses
 2. GUI Depths for the layers
 3. Scene Setup
