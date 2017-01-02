@@ -11,6 +11,7 @@ public class ViveCameraTexture : MonoBehaviour {
         get { return m_texture; }
     }
 
+	private GameObject cameraQuad;
     private Texture2D m_texture = null;
     private IntPtr m_frameBuffer = IntPtr.Zero;
     private uint m_frameBufferSize = 0;
@@ -23,9 +24,12 @@ public class ViveCameraTexture : MonoBehaviour {
     void Start()
     {
         m_camera = OpenVR.TrackedCamera;
+		cameraQuad = GameObject.FindWithTag("ViveCamera");
+
         if (m_camera == null)
         {
             Debug.LogError("No camera found");
+            Destroy(cameraQuad);
             return;
         }
 
@@ -70,6 +74,8 @@ public class ViveCameraTexture : MonoBehaviour {
         {
             Debug.LogError("Could not acquire handle to stream (error=" + cameraError + ")");
         }
+
+
     }
 
     private void OnDestroy()
@@ -90,6 +96,7 @@ public class ViveCameraTexture : MonoBehaviour {
         // Check for an error here Debug.Log("STREAM: error=" + cameraError);
         m_texture.LoadRawTextureData(m_frameBuffer, (int)m_frameBufferSize);
         m_texture.Apply();
+
     }
 
 }
