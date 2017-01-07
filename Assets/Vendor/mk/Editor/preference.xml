@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SkyBoxPreference xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <apiKey />
+  <skyBoxName>Skybox_WilsonIsle</skyBoxName>
+  <directory>Assets/StreetViewSkyboxes</directory>
+  <latitude>-23.3036925</latitude>
+  <longitude>151.9150093</longitude>
+  <imgSize>640</imgSize>
+</SkyBoxPreference>
